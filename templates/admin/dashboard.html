@@ -1,0 +1,113 @@
+{% extends "admin/base.html" %}
+
+{% block title %}관리자 대시보드{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">대시보드</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card dashboard-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="icon-wrapper bg-primary">
+                        <i class="fas fa-car text-white"></i>
+                    </div>
+                    <div class="ms-3">
+                        <div class="text-muted small">등록된 차량</div>
+                        <div class="h4 mb-0">{{ cars_count }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card dashboard-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="icon-wrapper bg-success">
+                        <i class="fas fa-calendar-check text-white"></i>
+                    </div>
+                    <div class="ms-3">
+                        <div class="text-muted small">예약 건수</div>
+                        <div class="h4 mb-0">{{ reservations_count }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card dashboard-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="icon-wrapper bg-warning">
+                        <i class="fas fa-phone text-white"></i>
+                    </div>
+                    <div class="ms-3">
+                        <div class="text-muted small">연락처</div>
+                        <div class="small">+84708000002</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-xl-3 mb-4">
+        <div class="card dashboard-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="icon-wrapper bg-info">
+                        <i class="fas fa-envelope text-white"></i>
+                    </div>
+                    <div class="ms-3">
+                        <div class="text-muted small">이메일</div>
+                        <div class="small">fjwz90@icloud.com</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">빠른 액세스</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('admin_car_add') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-plus me-2"></i>새 차량 추가
+                    </a>
+                    <a href="{{ url_for('admin_reservation_add') }}" class="btn btn-outline-success">
+                        <i class="fas fa-calendar-plus me-2"></i>새 예약 추가
+                    </a>
+                    <a href="{{ url_for('admin_calendar') }}" class="btn btn-outline-info">
+                        <i class="fas fa-calendar me-2"></i>예약 캘린더
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">시스템 정보</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    <strong>회사명:</strong> V0렌트카<br>
+                    <strong>주소:</strong> Đường 16, Tân Phú, Quận 7, Hồ Chí Minh<br>
+                    <strong>관리자:</strong> fjwz90
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

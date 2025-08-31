@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}회사소개 - V0렌트카🚀{% endblock %}
+
+{% block content %}
+<!-- Company Hero Section -->
+<section class="company-hero d-flex align-items-center">
+    <div class="container text-center">
+        <h1 class="hero-title display-4 fw-bold text-white mb-4">
+            회사소개
+        </h1>
+        <p class="hero-subtitle lead text-white">
+            호치민 프리미엄 렌터카의 새로운 시작
+        </p>
+    </div>
+</section>
+
+<!-- Company Story -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="company-story-card">
+                    <h2 class="text-center mb-4 section-title">우리의 이야기</h2>
+                    
+                    <div class="story-content">
+                        <p class="lead text-center mb-4">
+                            호치민에는 왜? 벤츠 렌트카는 없을까? 왜? 롤스로이스 렌트카는 없을까? 그런 생각으로 시작 하였습니다.
+                        </p>
+                        
+                        <p class="text-center mb-4">
+                            단기 렌트, 장기 렌트, 웨딩카 등 다목적 이용 가능한 렌트카 업체 입니다.
+                        </p>
+                        
+                        <p class="text-center lead">
+                            믿고 맡겨 주시면 최선을 다해 모시겠습니다. 감사합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Wedding Cars Gallery -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5 section-title">웨딩카 갤러리</h2>
+        
+        <div class="row" id="weddingGallery">
+            <!-- Wedding car images will be loaded here -->
+            <div class="col-md-6 mb-4">
+                <div class="wedding-photo-card" data-bs-toggle="modal" data-bs-target="#imageModal" 
+                     data-image="https://images.unsplash.com/photo-1549924231-f129b911e442?w=800">
+                    <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?w=400" 
+                         class="img-fluid wedding-photo" alt="웨딩카 1">
+                    <div class="photo-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="wedding-photo-card" data-bs-toggle="modal" data-bs-target="#imageModal" 
+                     data-image="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800">
+                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400" 
+                         class="img-fluid wedding-photo" alt="웨딩카 2">
+                    <div class="photo-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="wedding-photo-card" data-bs-toggle="modal" data-bs-target="#imageModal" 
+                     data-image="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800">
+                    <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400" 
+                         class="img-fluid wedding-photo" alt="웨딩카 3">
+                    <div class="photo-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="wedding-photo-card" data-bs-toggle="modal" data-bs-target="#imageModal" 
+                     data-image="https://images.unsplash.com/photo-1494905998402-395d579af36f?w=800">
+                    <img src="https://images.unsplash.com/photo-1494905998402-395d579af36f?w=400" 
+                         class="img-fluid wedding-photo" alt="웨딩카 4">
+                    <div class="photo-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-0">
+                <img id="modalImage" src="" class="img-fluid w-100" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle wedding photo modal
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    
+    imageModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const imageSrc = button.getAttribute('data-image');
+        modalImage.src = imageSrc;
+    });
+});
+</script>
+{% endblock %}

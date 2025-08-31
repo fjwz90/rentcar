@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}V0렌트카🚀{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top dreamy-nav">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">V0렌트카🚀</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('company') }}">회사소개</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('cars') }}">차량보기</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tel:+84708000002">
+                            <i class="fas fa-phone"></i> 전화
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container mt-5 pt-4">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="dreamy-footer mt-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="text-white mb-3">회사 정보</h5>
+                    <p class="text-light">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        Đường 16, Tân Phú, Quận 7, Hồ Chí Minh 700000, Việt Nam
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-white mb-3">연락처</h5>
+                    <p class="text-light">
+                        <i class="fas fa-phone me-2"></i>
+                        <a href="tel:+84708000002" class="text-light text-decoration-none">+84708000002</a>
+                    </p>
+                    <p class="text-light">
+                        <i class="fas fa-envelope me-2"></i>
+                        <a href="mailto:fjwz90@icloud.com" class="text-light text-decoration-none">fjwz90@icloud.com</a>
+                    </p>
+                </div>
+            </div>
+            <hr class="text-light">
+            <div class="text-center text-light">
+                <p>&copy; 2025 V0렌트카. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

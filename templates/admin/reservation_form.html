@@ -1,0 +1,105 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if reservation %}예약 수정{% else %}예약 추가{% endif %}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">{% if reservation %}예약 수정{% else %}예약 추가{% endif %}</h1>
+    <a href="{{ url_for('admin_reservations') }}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>목록으로
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <form method="POST" action="{{ url_for('admin_reservation_save') }}">
+            {% if reservation %}
+                <input type="hidden" name="reservation_id" value="{{ reservation.id }}">
+            {% endif %}
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">예약 정보</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="car_id" class="form-label">차량 선택</label>
+                        <select class="form-select" id="car_id" name="car_id" required>
+                            <option value="">차량을 선택하세요</option>
+                            {% for car in cars %}
+                                <option value="{{ car.id }}" 
+                                        {% if reservation and reservation.car_id == car.id %}selected{% endif %}>
+                                    {{ car.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="customer_name" class="form-label">고객명</label>
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" 
+                                   value="{{ reservation.customer_name if reservation else '' }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="customer_phone" class="form-label">연락처</label>
+                            <input type="tel" class="form-control" id="customer_phone" name="customer_phone" 
+                                   value="{{ reservation.customer_phone if reservation else '' }}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="customer_email" class="form-label">이메일</label>
+                        <input type="email" class="form-control" id="customer_email" name="customer_email" 
+                               value="{{ reservation.customer_email if reservation else '' }}">
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="rental_date" class="form-label">대여 날짜</label>
+                            <input type="date" class="form-control" id="rental_date" name="rental_date" 
+                                   value="{{ reservation.rental_date.strftime('%Y-%m-%d') if reservation else '' }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="return_date" class="form-label">반납 날짜</label>
+                            <input type="date" class="form-control" id="return_date" name="return_date" 
+                                   value="{{ reservation.return_date.strftime('%Y-%m-%d') if reservation else '' }}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="rental_time" class="form-label">대여 시간</label>
+                            <input type="time" class="form-control" id="rental_time" name="rental_time" 
+                                   value="{{ reservation.rental_time.strftime('%H:%M') if reservation else '' }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="return_time" class="form-label">반납 시간</label>
+                            <input type="time" class="form-control" id="return_time" name="return_time" 
+                                   value="{{ reservation.return_time.strftime('%H:%M') if reservation else '' }}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="kilometers" class="form-label">키로수</label>
+                        <input type="number" class="form-control" id="kilometers" name="kilometers" 
+                               value="{{ reservation.kilometers if reservation else '' }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">요청사항</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="4">{{ reservation.notes if reservation else '' }}</textarea>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>저장
+                    </button>
+                    <a href="{{ url_for('admin_reservations') }}" class="btn btn-secondary ms-2">취소</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

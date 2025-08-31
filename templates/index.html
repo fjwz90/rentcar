@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section d-flex align-items-center">
+    <div class="container text-center">
+        <h1 class="hero-title display-3 fw-bold text-white mb-4">
+            V0렌트카🚀
+        </h1>
+        <p class="hero-subtitle lead text-white mb-5">
+            호치민 최고의 프리미엄 렌터카 서비스
+        </p>
+    </div>
+</section>
+
+<!-- Cars Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 section-title">차량 선택</h2>
+        
+        {% if cars %}
+            <div class="row">
+                {% for car in cars %}
+                    <div class="col-12 mb-4">
+                        <div class="car-card">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    {% set images = car.get_images_list() %}
+                                    {% if images %}
+                                        <img src="{{ url_for('static', filename='uploads/' + images[0]) }}" 
+                                             class="img-fluid car-image" alt="{{ car.name }}">
+                                    {% else %}
+                                        <div class="placeholder-image d-flex align-items-center justify-content-center">
+                                            <i class="fas fa-car fa-3x text-muted"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ car.name }}</h5>
+                                        
+                                        <div class="pricing-info mb-3">
+                                            <div class="price-item">
+                                                <span class="price-label">2시간</span>
+                                                <span class="price-amount">{{ "{:,}".format(car.price_2h) }} VND</span>
+                                            </div>
+                                            <div class="price-item">
+                                                <span class="price-label">4시간</span>
+                                                <span class="price-amount">{{ "{:,}".format(car.price_4h) }} VND</span>
+                                            </div>
+                                            <div class="price-item">
+                                                <span class="price-label">8시간</span>
+                                                <span class="price-amount">{{ "{:,}".format(car.price_8h) }} VND</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="car-actions">
+                                            <a href="{{ url_for('car_detail', car_id=car.id) }}" 
+                                               class="btn btn-outline-primary me-2">자세히보기</a>
+                                            <a href="tel:+84708000002" 
+                                               class="btn btn-primary">이 차량 예약</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-car fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">등록된 차량이 없습니다</h4>
+            </div>
+        {% endif %}
+        
+        <!-- Long-term Rental Notice -->
+        <div class="text-center mt-5">
+            <div class="alert alert-info dreamy-alert">
+                <h5><i class="fas fa-phone me-2"></i>장기렌트의 경우 전화 문의 요망</h5>
+                <a href="tel:+84708000002" class="btn btn-outline-primary mt-2">
+                    <i class="fas fa-phone me-2"></i>+84708000002
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
