@@ -246,3 +246,21 @@ def api_reservations():
         })
     
     return jsonify(events)
+
+@app.route('/admin/api/reservation/<int:reservation_id>')
+@admin_required
+def api_reservation_detail(reservation_id):
+    reservation = Reservation.query.get_or_404(reservation_id)
+    return jsonify({
+        'id': reservation.id,
+        'car_name': reservation.car.name,
+        'customer_name': reservation.customer_name,
+        'customer_phone': reservation.customer_phone,
+        'customer_email': reservation.customer_email,
+        'rental_date': reservation.rental_date.strftime('%Y-%m-%d'),
+        'return_date': reservation.return_date.strftime('%Y-%m-%d'),
+        'rental_time': reservation.rental_time.strftime('%H:%M'),
+        'return_time': reservation.return_time.strftime('%H:%M'),
+        'kilometers': reservation.kilometers,
+        'notes': reservation.notes
+    })

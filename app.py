@@ -31,6 +31,14 @@ db.init_app(app)
 # Create upload directory if it doesn't exist
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
+# Custom Jinja2 filter for newlines
+def nl2br_filter(text):
+    if text:
+        return text.replace('\n', '<br>')
+    return text
+
+app.jinja_env.filters['nl2br'] = nl2br_filter
+
 with app.app_context():
     # Import models and routes
     import models
