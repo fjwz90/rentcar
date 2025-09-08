@@ -1,90 +1,80 @@
 {% extends "base.html" %}
 
-{% block title %}{{ car.name }} - V0렌트카🚀{% endblock %}
+{% block title %}{{ car.name }} - 상상렌트카{% endblock %}
 
 {% block content %}
 <!-- Car Detail Section -->
-<section class="py-5 mt-5">
-    <div class="container">
-        <div class="row">
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Car Images -->
-            <div class="col-lg-8 mb-4">
+            <div class="lg:col-span-2">
                 {% set images = car.get_images_list() %}
                 {% if images %}
-                    <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            {% for image in images[:8] %}
-                                <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                    <img src="{{ url_for('static', filename='uploads/' + image) }}" 
-                                         class="d-block w-100 car-detail-image" alt="{{ car.name }}">
-                                </div>
-                            {% endfor %}
+                    <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <img id="mainImage" src="{{ url_for('static', filename='uploads/' + images[0]) }}"
+                                 class="w-full h-96 lg:h-[500px] object-cover" alt="{{ car.name }}">
                         </div>
-                        
+
                         {% if images|length > 1 %}
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
-                                <span class="carousel-control-next-icon"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        {% endif %}
-                        
-                        {% if images|length > 1 %}
-                            <div class="carousel-indicators">
+                            <!-- Thumbnail Images -->
+                            <div class="flex space-x-2 mt-4 overflow-x-auto pb-2">
                                 {% for image in images[:8] %}
-                                    <button type="button" data-bs-target="#carCarousel" 
-                                            data-bs-slide-to="{{ loop.index0 }}" 
-                                            {% if loop.first %}class="active"{% endif %}></button>
+                                    <button data-image="{{ url_for('static', filename='uploads/' + image) }}"
+                                            class="thumbnail-btn flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-600">
+                                        <img src="{{ url_for('static', filename='uploads/' + image) }}"
+                                             class="w-full h-full object-cover" alt="썸네일 {{ loop.index }}">
+                                    </button>
                                 {% endfor %}
                             </div>
                         {% endif %}
                     </div>
                 {% else %}
-                    <div class="placeholder-image-large d-flex align-items-center justify-content-center">
-                        <i class="fas fa-car fa-5x text-muted"></i>
+                    <div class="w-full h-96 lg:h-[500px] bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center shadow-xl">
+                        <i class="fas fa-car text-8xl text-gray-400"></i>
                     </div>
                 {% endif %}
             </div>
-            
+
             <!-- Car Information -->
-            <div class="col-lg-4">
-                <div class="car-info-card">
-                    <h1 class="car-title">{{ car.name }}</h1>
-                    
-                    <div class="pricing-section mb-4">
-                        <h4 class="pricing-title mb-3">대여료 (시간별)</h4>
-                        <div class="price-list">
-                            <div class="price-item-large">
-                                <span class="price-label">2시간</span>
-                                <span class="price-amount">{{ "{:,}".format(car.price_2h) }} VND</span>
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-2xl shadow-xl p-8 sticky top-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-6">{{ car.name }}</h1>
+
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold text-primary-700 mb-4">대여료 (시간별)</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-4 bg-primary-50 rounded-xl border-l-4 border-primary-600">
+                                <span class="font-medium text-gray-700">공항픽업/2시간</span>
+                                <span class="text-xl font-bold text-primary-700">{{ "{:,}".format(car.price_2h) }} VND</span>
                             </div>
-                            <div class="price-item-large">
-                                <span class="price-label">4시간</span>
-                                <span class="price-amount">{{ "{:,}".format(car.price_4h) }} VND</span>
+                            <div class="flex justify-between items-center p-4 bg-primary-50 rounded-xl border-l-4 border-primary-600">
+                                <span class="font-medium text-gray-700">4시간</span>
+                                <span class="text-xl font-bold text-primary-700">{{ "{:,}".format(car.price_4h) }} VND</span>
                             </div>
-                            <div class="price-item-large">
-                                <span class="price-label">8시간</span>
-                                <span class="price-amount">{{ "{:,}".format(car.price_8h) }} VND</span>
+                            <div class="flex justify-between items-center p-4 bg-primary-50 rounded-xl border-l-4 border-primary-600">
+                                <span class="font-medium text-gray-700">8시간</span>
+                                <span class="text-xl font-bold text-primary-700">{{ "{:,}".format(car.price_8h) }} VND</span>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="action-buttons mb-4">
-                        <a href="tel:+84708000002" class="btn btn-primary btn-lg w-100 mb-2">
-                            <i class="fas fa-phone me-2"></i>이 차량 예약하기
+
+                    <div class="space-y-4 mb-8">
+                        <a href="tel:+84708000002"
+                           class="block w-full text-center px-6 py-4 bg-primary-600 text-white rounded-xl font-semibold text-lg hover:bg-primary-700 transition-all duration-200 shadow-lg hover:shadow-xl">
+                            <i class="fas fa-phone mr-2"></i>이 차량 예약하기
                         </a>
-                        <a href="{{ url_for('cars') }}" class="btn btn-outline-secondary w-100">
-                            <i class="fas fa-arrow-left me-2"></i>차량 목록으로
+                        <a href="{{ url_for('cars') }}"
+                           class="block w-full text-center px-6 py-4 border-2 border-gray-300 text-gray-700 rounded-xl font-medium hover:border-primary-600 hover:text-primary-600 transition-all duration-200">
+                            <i class="fas fa-arrow-left mr-2"></i>차량 목록으로
                         </a>
                     </div>
-                    
+
                     {% if car.description %}
-                        <div class="car-description">
-                            <h5 class="mb-3">차량 설명</h5>
-                            <p class="text-muted">{{ car.description|nl2br|safe }}</p>
+                        <div class="border-t pt-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-3">차량 설명</h4>
+                            <p class="text-gray-600 leading-relaxed">{{ car.description|nl2br|safe }}</p>
                         </div>
                     {% endif %}
                 </div>
@@ -96,13 +86,28 @@
 
 {% block extra_scripts %}
 <script>
-// Custom filter for newlines
 document.addEventListener('DOMContentLoaded', function() {
     // Handle newlines in description
     const description = document.querySelector('.car-description p');
     if (description) {
         description.innerHTML = description.textContent.replace(/\n/g, '<br>');
     }
+
+    // Handle thumbnail image switching
+    const thumbnailButtons = document.querySelectorAll('.thumbnail-btn');
+    const mainImage = document.getElementById('mainImage');
+
+    thumbnailButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const imageSrc = this.getAttribute('data-image');
+            if (mainImage && imageSrc) {
+                mainImage.src = imageSrc;
+                // Update active state
+                thumbnailButtons.forEach(btn => btn.classList.remove('border-primary-600'));
+                this.classList.add('border-primary-600');
+            }
+        });
+    });
 });
 </script>
 {% endblock %}

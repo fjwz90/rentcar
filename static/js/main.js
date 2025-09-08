@@ -1,4 +1,4 @@
-// Main JavaScript for V0렌트카
+// Main JavaScript for 상상렌트카
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize animations
     initAnimations();
@@ -274,7 +274,7 @@ document.addEventListener('keydown', function(e) {
             document.body.style.animation = '';
         }, 5000);
         
-        showNotification('🚀 V0렌트카 숨겨진 기능이 활성화되었습니다!', 'info');
+        showNotification('🚀 상상렌트카 숨겨진 기능이 활성화되었습니다!', 'info');
     }
 });
 

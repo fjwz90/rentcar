@@ -2,65 +2,69 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="hero-section d-flex align-items-center">
-    <div class="container text-center">
-        <h1 class="hero-title display-3 fw-bold text-white mb-4">
-            V0렌트카🚀
+<section class="relative min-h-[0vh] flex items-center bg-gradient-to-br from-primary-600 to-primary-800 overflow-hidden">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="absolute inset-0 animate-float opacity-30" style="background: url('data:image/svg+xml,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3e%3cdefs%3e%3cradialGradient id=%22grad%22 cx=%2250%25%22 cy=%2250%25%22 r=%2250%25%22%3e%3cstop offset=%220%25%22 style=%22stop-color:rgba(255,255,255,0.1);stop-opacity:1%22 /%3e%3cstop offset=%22100%25%22 style=%22stop-color:rgba(255,255,255,0);stop-opacity:1%22 /%3e%3c/radialGradient%3e%3c/defs%3e%3ccircle cx=%2220%22 cy=%2220%22 r=%222%22 fill=%22url(%23grad)%22%3e%3canimate attributeName=%22cy%22 values=%2220;80;20%22 dur=%224s%22 repeatCount=%22indefinite%22/%3e%3c/circle%3e%3ccircle cx=%2280%22 cy=%2280%22 r=%223%22 fill=%22url(%23grad)%22%3e%3canimate attributeName=%22cx%22 values=%2280;20;80%22 dur=%226s%22 repeatCount=%22indefinite%22/%3e%3c/circle%3e%3ccircle cx=%2240%22 cy=%2260%22 r=%221%22 fill=%22url(%23grad)%22%3e%3canimate attributeName=%22r%22 values=%221;4;1%22 dur=%223s%22 repeatCount=%22indefinite%22/%3e%3c/circle%3e%3c/svg%3e')"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 animate-glow">
+            상상렌트카
         </h1>
-        <p class="hero-subtitle lead text-white mb-5">
+        <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
             호치민 최고의 프리미엄 렌터카 서비스
         </p>
     </div>
 </section>
 
 <!-- Cars Section -->
-<section class="py-5">
-    <div class="container">
-        <h2 class="text-center mb-5 section-title">차량 선택</h2>
-        
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 relative">
+            차량 선택
+        </h2>
+
         {% if cars %}
-            <div class="row">
+            <div class="grid grid-cols-1 gap-8">
                 {% for car in cars %}
-                    <div class="col-12 mb-4">
-                        <div class="car-card">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    {% set images = car.get_images_list() %}
-                                    {% if images %}
-                                        <img src="{{ url_for('static', filename='uploads/' + images[0]) }}" 
-                                             class="img-fluid car-image" alt="{{ car.name }}">
-                                    {% else %}
-                                        <div class="placeholder-image d-flex align-items-center justify-content-center">
-                                            <i class="fas fa-car fa-3x text-muted"></i>
-                                        </div>
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ car.name }}</h5>
-                                        
-                                        <div class="pricing-info mb-3">
-                                            <div class="price-item">
-                                                <span class="price-label">2시간</span>
-                                                <span class="price-amount">{{ "{:,}".format(car.price_2h) }} VND</span>
-                                            </div>
-                                            <div class="price-item">
-                                                <span class="price-label">4시간</span>
-                                                <span class="price-amount">{{ "{:,}".format(car.price_4h) }} VND</span>
-                                            </div>
-                                            <div class="price-item">
-                                                <span class="price-label">8시간</span>
-                                                <span class="price-amount">{{ "{:,}".format(car.price_8h) }} VND</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="car-actions">
-                                            <a href="{{ url_for('car_detail', car_id=car.id) }}" 
-                                               class="btn btn-outline-primary me-2">자세히보기</a>
-                                            <a href="tel:+84708000002" 
-                                               class="btn btn-primary">이 차량 예약</a>
-                                        </div>
+                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                        <div class="md:flex">
+                            <div class="md:w-1/3">
+                                {% set images = car.get_images_list() %}
+                                {% if images %}
+                                    <img src="{{ url_for('static', filename='uploads/' + images[0]) }}"
+                                         class="w-full h-64 md:h-full object-cover" alt="{{ car.name }}">
+                                {% else %}
+                                    <div class="w-full h-64 md:h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                        <i class="fas fa-car text-6xl text-gray-400"></i>
                                     </div>
+                                {% endif %}
+                            </div>
+                            <div class="md:w-2/3 p-6 md:p-8">
+                                <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ car.name }}</h3>
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                    <div class="bg-primary-50 rounded-lg p-4 border-l-4 border-primary-600">
+                                        <div class="text-sm font-medium text-gray-600">공항픽업/2시간</div>
+                                        <div class="text-lg font-bold text-primary-700">{{ "{:,}".format(car.price_2h) }} VND</div>
+                                    </div>
+                                    <div class="bg-primary-50 rounded-lg p-4 border-l-4 border-primary-600">
+                                        <div class="text-sm font-medium text-gray-600">4시간</div>
+                                        <div class="text-lg font-bold text-primary-700">{{ "{:,}".format(car.price_4h) }} VND</div>
+                                    </div>
+                                    <div class="bg-primary-50 rounded-lg p-4 border-l-4 border-primary-600">
+                                        <div class="text-sm font-medium text-gray-600">8시간</div>
+                                        <div class="text-lg font-bold text-primary-700">{{ "{:,}".format(car.price_8h) }} VND</div>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <a href="{{ url_for('car_detail', car_id=car.id) }}"
+                                       class="inline-flex items-center justify-center px-6 py-3 border-2 border-primary-600 text-primary-600 rounded-xl font-medium hover:bg-primary-600 hover:text-white transition-all duration-200">
+                                        <i class="fas fa-info-circle mr-2"></i>자세히보기
+                                    </a>
+                                    <a href="tel:+84708000002"
+                                       class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 text-white rounded-xl font-medium hover:bg-primary-700 transition-all duration-200">
+                                        <i class="fas fa-phone mr-2"></i>이 차량 예약
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -68,18 +72,22 @@
                 {% endfor %}
             </div>
         {% else %}
-            <div class="text-center py-5">
-                <i class="fas fa-car fa-3x text-muted mb-3"></i>
-                <h4 class="text-muted">등록된 차량이 없습니다</h4>
+            <div class="text-center py-16">
+                <i class="fas fa-car text-6xl text-gray-400 mb-4"></i>
+                <h3 class="text-xl font-medium text-gray-600 mb-2">등록된 차량이 없습니다</h3>
+                <p class="text-gray-500">곧 새로운 차량들이 추가될 예정입니다.</p>
             </div>
         {% endif %}
-        
+
         <!-- Long-term Rental Notice -->
-        <div class="text-center mt-5">
-            <div class="alert alert-info dreamy-alert">
-                <h5><i class="fas fa-phone me-2"></i>장기렌트의 경우 전화 문의 요망</h5>
-                <a href="tel:+84708000002" class="btn btn-outline-primary mt-2">
-                    <i class="fas fa-phone me-2"></i>+84708000002
+        <div class="text-center mt-16">
+            <div class="bg-blue-50 border border-blue-200 rounded-2xl p-8 max-w-2xl mx-auto">
+                <h3 class="text-xl font-semibold text-blue-900 mb-4">
+                    <i class="fas fa-phone text-blue-600 mr-2"></i>장기렌트의 경우 전화 문의 요망
+                </h3>
+                <a href="tel:+84708000002"
+                   class="inline-flex items-center justify-center px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-xl font-medium hover:bg-blue-600 hover:text-white transition-all duration-200">
+                    <i class="fas fa-phone mr-2"></i>+84708000002
                 </a>
             </div>
         </div>

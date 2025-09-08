@@ -1,68 +1,71 @@
 {% extends "base.html" %}
 
-{% block title %}차량보기 - V0렌트카🚀{% endblock %}
+{% block title %}차량보기 - 상상렌트카{% endblock %}
 
 {% block content %}
 <!-- Page Header -->
-<section class="page-header d-flex align-items-center">
-    <div class="container">
-        <h1 class="text-white display-4 fw-bold">차량보기</h1>
-        <p class="text-white lead">다양한 프리미엄 차량을 만나보세요</p>
+<section class="relative min-h-[0vh] flex items-center bg-gradient-to-br from-primary-600 to-primary-800">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">차량보기</h1>
+        <p class="text-xl md:text-2xl text-white/90">다양한 프리미엄 차량을 만나보세요</p>
     </div>
 </section>
 
 <!-- Cars Grid -->
-<section class="py-5">
-    <div class="container">
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {% if cars %}
-            <div class="row">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {% for car in cars %}
-                    <div class="col-md-6 mb-4">
-                        <div class="car-card h-100">
-                            {% set images = car.get_images_list() %}
-                            {% if images %}
-                                <img src="{{ url_for('static', filename='uploads/' + images[0]) }}" 
-                                     class="card-img-top car-image" alt="{{ car.name }}">
-                            {% else %}
-                                <div class="placeholder-image card-img-top d-flex align-items-center justify-content-center">
-                                    <i class="fas fa-car fa-3x text-muted"></i>
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col">
+                        {% set images = car.get_images_list() %}
+                        {% if images %}
+                            <img src="{{ url_for('static', filename='uploads/' + images[0]) }}"
+                                 class="w-full h-48 object-cover" alt="{{ car.name }}">
+                        {% else %}
+                            <div class="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                <i class="fas fa-car text-4xl text-gray-400"></i>
+                            </div>
+                        {% endif %}
+
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4">{{ car.name }}</h3>
+
+                            <div class="grid grid-cols-3 gap-3 mb-6 flex-grow">
+                                <div class="bg-primary-50 rounded-lg p-3 text-center border-l-4 border-primary-600">
+                                    <div class="text-xs font-medium text-gray-600">공항픽업/2시간</div>
+                                    <div class="text-sm font-bold text-primary-700">{{ "{:,}".format(car.price_2h) }} VND</div>
                                 </div>
-                            {% endif %}
-                            
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">{{ car.name }}</h5>
-                                
-                                <div class="pricing-info mb-3">
-                                    <div class="price-item">
-                                        <span class="price-label">2시간</span>
-                                        <span class="price-amount">{{ "{:,}".format(car.price_2h) }} VND</span>
-                                    </div>
-                                    <div class="price-item">
-                                        <span class="price-label">4시간</span>
-                                        <span class="price-amount">{{ "{:,}".format(car.price_4h) }} VND</span>
-                                    </div>
-                                    <div class="price-item">
-                                        <span class="price-label">8시간</span>
-                                        <span class="price-amount">{{ "{:,}".format(car.price_8h) }} VND</span>
-                                    </div>
+                                <div class="bg-primary-50 rounded-lg p-3 text-center border-l-4 border-primary-600">
+                                    <div class="text-xs font-medium text-gray-600">4시간</div>
+                                    <div class="text-sm font-bold text-primary-700">{{ "{:,}".format(car.price_4h) }} VND</div>
                                 </div>
-                                
-                                <div class="car-actions mt-auto">
-                                    <a href="{{ url_for('car_detail', car_id=car.id) }}" 
-                                       class="btn btn-outline-primary w-100 mb-2">자세히보기</a>
-                                    <a href="tel:+84708000002" 
-                                       class="btn btn-primary w-100">이 차량 예약</a>
+                                <div class="bg-primary-50 rounded-lg p-3 text-center border-l-4 border-primary-600">
+                                    <div class="text-xs font-medium text-gray-600">8시간</div>
+                                    <div class="text-sm font-bold text-primary-700">{{ "{:,}".format(car.price_8h) }} VND</div>
                                 </div>
+                            </div>
+
+                            <div class="space-y-3 mt-auto">
+                                <a href="{{ url_for('car_detail', car_id=car.id) }}"
+                                   class="block w-full text-center px-4 py-3 border-2 border-primary-600 text-primary-600 rounded-xl font-medium hover:bg-primary-600 hover:text-white transition-all duration-200">
+                                    자세히보기
+                                </a>
+                                <a href="tel:+84708000002"
+                                   class="block w-full text-center px-4 py-3 bg-primary-600 text-white rounded-xl font-medium hover:bg-primary-700 transition-all duration-200">
+                                    이 차량 예약
+                                </a>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         {% else %}
-            <div class="text-center py-5">
-                <i class="fas fa-car fa-3x text-muted mb-3"></i>
-                <h4 class="text-muted">등록된 차량이 없습니다</h4>
-                <p class="text-muted">곧 새로운 차량들이 추가될 예정입니다.</p>
+            <div class="text-center py-16">
+                <i class="fas fa-car text-6xl text-gray-400 mb-4"></i>
+                <h3 class="text-xl font-medium text-gray-600 mb-2">등록된 차량이 없습니다</h3>
+                <p class="text-gray-500">곧 새로운 차량들이 추가될 예정입니다.</p>
             </div>
         {% endif %}
     </div>

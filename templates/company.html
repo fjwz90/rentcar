@@ -1,95 +1,83 @@
 {% extends "base.html" %}
 
-{% block title %}회사소개 - V0렌트카🚀{% endblock %}
+{% block title %}회사소개 - 상상렌트카{% endblock %}
 
 {% block content %}
 <!-- Company Hero Section -->
-<section class="company-hero d-flex align-items-center">
-    <div class="container text-center">
-        <h1 class="hero-title display-4 fw-bold text-white mb-4">
-            회사소개
-        </h1>
-        <p class="hero-subtitle lead text-white">
-            호치민 프리미엄 렌터카의 새로운 시작
-        </p>
+<section class="relative min-h-[0vh] flex items-center bg-gradient-to-br from-primary-600 to-primary-800">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">회사소개</h1>
+        <p class="text-xl md:text-2xl text-white/90">호치민 프리미엄 렌터카의 새로운 시작</p>
     </div>
 </section>
 
 <!-- Company Story -->
-<section class="py-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="company-story-card">
-                    <h2 class="text-center mb-4 section-title">우리의 이야기</h2>
-                    
-                    <div class="story-content">
-                        <p class="lead text-center mb-4">
-                            호치민에는 왜? 벤츠 렌트카는 없을까? 왜? 롤스로이스 렌트카는 없을까? 그런 생각으로 시작 하였습니다.
-                        </p>
-                        
-                        <p class="text-center mb-4">
-                            단기 렌트, 장기 렌트, 웨딩카 등 다목적 이용 가능한 렌트카 업체 입니다.
-                        </p>
-                        
-                        <p class="text-center lead">
-                            믿고 맡겨 주시면 최선을 다해 모시겠습니다. 감사합니다.
-                        </p>
-                    </div>
-                </div>
+<section class="py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8 relative">
+                우리의 이야기
+            </h2>
+
+            <div class="text-center space-y-6">
+                <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+                    호치민에는 왜? 벤츠 렌트카는 없을까? 왜? 롤스로이스 렌트카는 없을까? 그런 생각으로 시작 하였습니다.
+                </p>
+
+                <p class="text-base md:text-lg text-gray-600 leading-relaxed">
+                    단기 렌트, 장기 렌트, 웨딩카 등 다목적 이용 가능한 렌트카 업체 입니다.
+                </p>
+
+                <p class="text-lg md:text-xl text-primary-700 font-medium leading-relaxed">
+                    믿고 맡겨 주시면 최선을 다해 모시겠습니다. 감사합니다.
+                </p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Wedding Cars Gallery -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-5 section-title">웨딩카 갤러리</h2>
-        
-        <div class="row" id="weddingGallery">
-            <!-- Wedding car images will be loaded here -->
-            <div class="col-md-6 mb-4">
-                <div class="wedding-photo-card" data-bs-toggle="modal" data-bs-target="#imageModal" 
-                     data-image="https://images.unsplash.com/photo-1549924231-f129b911e442?w=800">
-                    <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?w=400" 
-                         class="img-fluid wedding-photo" alt="웨딩카 1">
-                    <div class="photo-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 relative">
+            웨딩카 갤러리
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform hover:scale-105 transition-all duration-300"
+                 onclick="openModal('https://images.unsplash.com/photo-1549924231-f129b911e442?w=800')">
+                <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?w=600"
+                     class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" alt="웨딩카 1">
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <i class="fas fa-search-plus text-white text-3xl"></i>
                 </div>
             </div>
-            
-            <div class="col-md-6 mb-4">
-                <div class="wedding-photo-card" data-bs-toggle="modal" data-bs-target="#imageModal" 
-                     data-image="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800">
-                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400" 
-                         class="img-fluid wedding-photo" alt="웨딩카 2">
-                    <div class="photo-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+
+            <div class="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform hover:scale-105 transition-all duration-300"
+                 onclick="openModal('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800')">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600"
+                     class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" alt="웨딩카 2">
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <i class="fas fa-search-plus text-white text-3xl"></i>
                 </div>
             </div>
-            
-            <div class="col-md-6 mb-4">
-                <div class="wedding-photo-card" data-bs-toggle="modal" data-bs-target="#imageModal" 
-                     data-image="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800">
-                    <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400" 
-                         class="img-fluid wedding-photo" alt="웨딩카 3">
-                    <div class="photo-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+
+            <div class="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform hover:scale-105 transition-all duration-300"
+                 onclick="openModal('https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800')">
+                <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=600"
+                     class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" alt="웨딩카 3">
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <i class="fas fa-search-plus text-white text-3xl"></i>
                 </div>
             </div>
-            
-            <div class="col-md-6 mb-4">
-                <div class="wedding-photo-card" data-bs-toggle="modal" data-bs-target="#imageModal" 
-                     data-image="https://images.unsplash.com/photo-1494905998402-395d579af36f?w=800">
-                    <img src="https://images.unsplash.com/photo-1494905998402-395d579af36f?w=400" 
-                         class="img-fluid wedding-photo" alt="웨딩카 4">
-                    <div class="photo-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+
+            <div class="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform hover:scale-105 transition-all duration-300"
+                 onclick="openModal('https://images.unsplash.com/photo-1494905998402-395d579af36f?w=800')">
+                <img src="https://images.unsplash.com/photo-1494905998402-395d579af36f?w=600"
+                     class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" alt="웨딩카 4">
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <i class="fas fa-search-plus text-white text-3xl"></i>
                 </div>
             </div>
         </div>
@@ -97,31 +85,48 @@
 </section>
 
 <!-- Image Modal -->
-<div class="modal fade" id="imageModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body p-0">
-                <img id="modalImage" src="" class="img-fluid w-100" alt="">
-            </div>
-        </div>
+<div id="imageModal" class="fixed inset-0 bg-black/80 hidden z-50 flex items-center justify-center p-4">
+    <div class="relative max-w-4xl max-h-full">
+        <button onclick="closeModal()" class="absolute -top-12 right-0 text-white text-2xl hover:text-gray-300 transition-colors">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="modalImage" src="" class="max-w-full max-h-full object-contain rounded-lg" alt="">
     </div>
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Handle wedding photo modal
-    const imageModal = document.getElementById('imageModal');
+function openModal(imageSrc) {
+    const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
-    
-    imageModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const imageSrc = button.getAttribute('data-image');
-        modalImage.src = imageSrc;
+    modalImage.src = imageSrc;
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal when clicking outside
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('imageModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
     });
 });
 </script>
