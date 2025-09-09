@@ -7,9 +7,21 @@
 <section class="py-16 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Car Images -->
+            <!-- Car Media (Video + Images) -->
             <div class="lg:col-span-2">
                 {% set images = car.get_images_list() %}
+                {% if car.video %}
+                    <!-- Video Section -->
+                    <div class="relative overflow-hidden rounded-2xl shadow-2xl mb-6">
+                        <div class="w-full aspect-[16/10] bg-gray-100">
+                            <video id="mainVideo" autoplay muted controls class="w-full h-full object-contain autoplay-video">
+                                <source src="{{ url_for('static', filename='uploads/' + car.video) }}" type="video/mp4">
+                                브라우저가 동영상을 지원하지 않습니다.
+                            </video>
+                        </div>
+                    </div>
+                {% endif %}
+
                 {% if images %}
                     <div class="relative overflow-hidden rounded-2xl shadow-2xl">
                         <div class="w-full aspect-[16/10] bg-gray-100">
@@ -30,7 +42,7 @@
                             </div>
                         {% endif %}
                     </div>
-                {% else %}
+                {% elif not car.video %}
                     <div class="w-full h-96 lg:h-[500px] bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center shadow-xl">
                         <i class="fas fa-car text-8xl text-gray-400"></i>
                     </div>
@@ -106,6 +118,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 thumbnailButtons.forEach(btn => btn.classList.remove('border-primary-600'));
                 this.classList.add('border-primary-600');
             }
+        });
+    });
+
+    // Handle video autoplay - play once and stop
+    const videos = document.querySelectorAll('.autoplay-video');
+
+    videos.forEach(video => {
+        video.addEventListener('ended', function() {
+            // Video will automatically stop after playing once (no loop)
         });
     });
 });

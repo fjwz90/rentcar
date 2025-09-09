@@ -18,15 +18,24 @@ def init_admin():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
+def allowed_video_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'mp4', 'avi', 'mov', 'wmv', 'flv', 'webm'}
+
 # Public routes
 @app.route('/')
 def index():
-    cars = Car.query.all()
+    # 동영상이 있는 차량을 우선 표시
+    cars_with_video = Car.query.filter(Car.video.isnot(None)).order_by(Car.created_at.desc()).all()
+    cars_without_video = Car.query.filter(Car.video.is_(None)).order_by(Car.created_at.desc()).all()
+    cars = cars_with_video + cars_without_video
     return render_template('index.html', cars=cars)
 
 @app.route('/cars')
 def cars():
-    cars_list = Car.query.all()
+    # 동영상이 있는 차량을 우선 표시
+    cars_with_video = Car.query.filter(Car.video.isnot(None)).order_by(Car.created_at.desc()).all()
+    cars_without_video = Car.query.filter(Car.video.is_(None)).order_by(Car.created_at.desc()).all()
+    cars_list = cars_with_video + cars_without_video
     return render_template('cars.html', cars=cars_list)
 
 @app.route('/car/<int:car_id>')
@@ -109,24 +118,37 @@ def admin_car_save():
     price_2h = int(request.form.get('price_2h'))
     price_4h = int(request.form.get('price_4h'))
     price_8h = int(request.form.get('price_8h'))
-    
+
     if car_id:
         car = Car.query.get_or_404(car_id)
     else:
         car = Car()
         db.session.add(car)
-    
+
     car.name = name
     car.description = description
     car.price_2h = price_2h
     car.price_4h = price_4h
     car.price_8h = price_8h
-    
+
     # Handle file uploads
     uploaded_files = request.files.getlist('images')
     existing_images = car.get_images_list() if car_id else []
     new_images = []
-    
+
+    # Handle removed images
+    removed_images_str = request.form.get('removed_images', '')
+    removed_images = removed_images_str.split(',') if removed_images_str else []
+
+    # Remove deleted images from existing images list and delete files
+    for removed_image in removed_images:
+        if removed_image in existing_images:
+            existing_images.remove(removed_image)
+            # Delete the actual file
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], removed_image)
+            if os.path.exists(image_path):
+                os.remove(image_path)
+
     for file in uploaded_files:
         if file and file.filename and allowed_file(file.filename):
             filename = secure_filename(file.filename)
@@ -135,11 +157,35 @@ def admin_car_save():
             filename = timestamp + filename
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             new_images.append(filename)
-    
+
     # Combine existing and new images
     all_images = existing_images + new_images
     car.set_images_list(all_images)
-    
+
+    # Handle video upload
+    video_file = request.files.get('video')
+    removed_video = request.form.get('removed_video', '')
+
+    if video_file and video_file.filename and allowed_video_file(video_file.filename):
+        # Delete existing video if it exists
+        if car.video and os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], car.video)):
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], car.video))
+
+        filename = secure_filename(video_file.filename)
+        # Add timestamp to avoid conflicts
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_')
+        filename = timestamp + filename
+        video_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        car.video = filename
+    elif removed_video:
+        # If video is marked for removal
+        if car.video and os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], car.video)):
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], car.video))
+        car.video = None
+    elif not video_file or not video_file.filename:
+        # If no video uploaded, keep existing video
+        pass
+
     db.session.commit()
     flash('Car saved successfully!', 'success')
     return redirect(url_for('admin_cars'))
@@ -154,6 +200,12 @@ def admin_car_delete(car_id):
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], image)
         if os.path.exists(image_path):
             os.remove(image_path)
+
+    # Delete associated video file
+    if car.video:
+        video_path = os.path.join(app.config['UPLOAD_FOLDER'], car.video)
+        if os.path.exists(video_path):
+            os.remove(video_path)
     
     db.session.delete(car)
     db.session.commit()

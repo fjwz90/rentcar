@@ -37,49 +37,14 @@
     </div>
 </section>
 
-<!-- Wedding Cars Gallery -->
+<!-- Wedding Car Video -->
 <section class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 relative">
-            웨딩카 갤러리
+            웨딩카 동영상
         </h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform hover:scale-105 transition-all duration-300"
-                 onclick="openModal('http://0.0.0.0:8000/static/uploads/20250909_154016_1.jpg?w=800')">
-                <img src="http://0.0.0.0:8000/static/uploads/20250909_154016_1.jpg?w=600"
-                     class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" alt="웨딩카 1">
-                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <i class="fas fa-search-plus text-white text-3xl"></i>
-                </div>
-            </div>
-
-            <div class="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform hover:scale-105 transition-all duration-300"
-                 onclick="openModal('http://0.0.0.0:8000/static/uploads/20250909_153902_1.jpgw=800')">
-                <img src="http://0.0.0.0:8000/static/uploads/20250909_153902_1.jpg?w=600"
-                     class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" alt="웨딩카 2">
-                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <i class="fas fa-search-plus text-white text-3xl"></i>
-                </div>
-            </div>
-
-            <div class="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform hover:scale-105 transition-all duration-300"
-                 onclick="openModal('https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800')">
-                <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=600"
-                     class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" alt="웨딩카 3">
-                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <i class="fas fa-search-plus text-white text-3xl"></i>
-                </div>
-            </div>
-
-            <div class="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform hover:scale-105 transition-all duration-300"
-                 onclick="openModal('https://images.unsplash.com/photo-1494905998402-395d579af36f?w=800')">
-                <img src="https://images.unsplash.com/photo-1494905998402-395d579af36f?w=600"
-                     class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" alt="웨딩카 4">
-                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <i class="fas fa-search-plus text-white text-3xl"></i>
-                </div>
-            </div>
+        <div class="flex justify-center">
+            <video src="/static/uploads/R.mp4" autoplay muted controls class="rounded-2xl shadow-xl max-w-full h-auto autoplay-video" style="max-height: 70vh;"></video>
         </div>
     </div>
 </section>
@@ -127,6 +92,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
             closeModal();
         }
+    });
+
+    // Handle video autoplay - play once and stop
+    const videos = document.querySelectorAll('.autoplay-video');
+
+    videos.forEach(video => {
+        video.addEventListener('ended', function() {
+            // Video will automatically stop after playing once (no loop)
+        });
     });
 });
 </script>

@@ -53,24 +53,63 @@
                     
                     <div class="mb-3">
                         <label for="images" class="form-label">차량 이미지</label>
-                        <input type="file" class="form-control" id="images" name="images" 
+                        <input type="file" class="form-control" id="images" name="images"
                                multiple accept="image/*">
                         <div class="form-text">
                             여러 이미지를 선택할 수 있습니다. (JPG, PNG, GIF, WebP)
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="video" class="form-label">차량 동영상</label>
+                        <input type="file" class="form-control" id="video" name="video"
+                               accept="video/*">
+                        <div class="form-text">
+                            동영상 파일을 업로드할 수 있습니다. (MP4, AVI, MOV, WMV, FLV, WebM)
                         </div>
                     </div>
                     
                     {% if car and car.get_images_list() %}
                         <div class="mb-3">
                             <label class="form-label">현재 이미지</label>
-                            <div class="row">
+                            <div class="row" id="currentImages">
                                 {% for image in car.get_images_list() %}
-                                    <div class="col-md-3 mb-2">
-                                        <img src="{{ url_for('static', filename='uploads/' + image) }}" 
-                                             class="img-thumbnail" alt="차량 이미지">
+                                    <div class="col-md-3 mb-2 image-item" data-image="{{ image }}">
+                                        <div class="position-relative">
+                                            <img src="{{ url_for('static', filename='uploads/' + image) }}"
+                                                 class="img-thumbnail" alt="차량 이미지" style="width: 100%; height: 150px; object-fit: cover;">
+                                            <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 remove-image-btn"
+                                                    onclick="removeExistingImage('{{ image }}', this)" style="margin: 5px;">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <small class="text-muted d-block">{{ image }}</small>
                                     </div>
                                 {% endfor %}
                             </div>
+                            <input type="hidden" name="removed_images" id="removedImages" value="">
+                        </div>
+                    {% endif %}
+
+                    {% if car and car.video %}
+                        <div class="mb-3">
+                            <label class="form-label">현재 동영상</label>
+                            <div class="row">
+                                <div class="col-md-6 mb-2 video-item" data-video="{{ car.video }}">
+                                    <div class="position-relative">
+                                        <video controls class="w-100">
+                                            <source src="{{ url_for('static', filename='uploads/' + car.video) }}" type="video/mp4">
+                                            브라우저가 동영상을 지원하지 않습니다.
+                                        </video>
+                                        <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 remove-video-btn"
+                                                onclick="removeExistingVideo('{{ car.video }}', this)" style="margin: 5px;">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <small class="text-muted d-block">{{ car.video }}</small>
+                                </div>
+                            </div>
+                            <input type="hidden" name="removed_video" id="removedVideo" value="">
                         </div>
                     {% endif %}
                 </div>
@@ -146,20 +185,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 폼 제출 시 로딩 상태 표시
     form.addEventListener('submit', function(e) {
-        const files = imageInput.files;
-        if (files.length > 0) {
+        const imageFiles = imageInput.files;
+        const videoInput = document.getElementById('video');
+        const videoFile = videoInput ? videoInput.files[0] : null;
+
+        let totalSize = 0;
+
+        // 이미지 파일 크기 계산
+        if (imageFiles.length > 0) {
+            for (let file of imageFiles) {
+                totalSize += file.size;
+            }
+        }
+
+        // 동영상 파일 크기 계산
+        if (videoFile) {
+            totalSize += videoFile.size;
+        }
+
+        if (totalSize > 0) {
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>업로드 중...';
 
-            // 파일 크기 검증 (16MB 제한)
-            let totalSize = 0;
-            for (let file of files) {
-                totalSize += file.size;
-            }
-
-            if (totalSize > 16 * 1024 * 1024) { // 16MB
+            // 파일 크기 검증 (50MB 제한)
+            if (totalSize > 50 * 1024 * 1024) { // 50MB
                 e.preventDefault();
-                alert('총 파일 크기가 16MB를 초과합니다. 파일을 분할하여 업로드해주세요.');
+                alert('총 파일 크기가 50MB를 초과합니다. 파일을 분할하여 업로드해주세요.');
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-save me-2"></i>저장';
                 return;
@@ -186,6 +237,32 @@ document.addEventListener('DOMContentLoaded', function() {
             if (label) {
                 label.textContent = `선택된 이미지 (${remainingPreviews.length}개)`;
             }
+        }
+    };
+
+    // 기존 이미지 제거 함수
+    window.removeExistingImage = function(imageName, button) {
+        if (confirm('이 이미지를 정말 삭제하시겠습니까?')) {
+            const imageItem = button.closest('.image-item');
+            imageItem.remove();
+
+            // 제거된 이미지 목록에 추가
+            const removedImagesInput = document.getElementById('removedImages');
+            const currentRemoved = removedImagesInput.value ? removedImagesInput.value.split(',') : [];
+            currentRemoved.push(imageName);
+            removedImagesInput.value = currentRemoved.join(',');
+        }
+    };
+
+    // 기존 동영상 제거 함수
+    window.removeExistingVideo = function(videoName, button) {
+        if (confirm('이 동영상을 정말 삭제하시겠습니까?')) {
+            const videoItem = button.closest('.video-item');
+            videoItem.remove();
+
+            // 제거된 동영상 설정
+            const removedVideoInput = document.getElementById('removedVideo');
+            removedVideoInput.value = videoName;
         }
     };
 });

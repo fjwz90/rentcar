@@ -10,6 +10,7 @@ class Car(db.Model):
     price_4h = db.Column(db.Integer, nullable=False)
     price_8h = db.Column(db.Integer, nullable=False)
     images = db.Column(db.Text)  # JSON string of image paths
+    video = db.Column(db.String(255))  # Video file path
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     def get_images_list(self):
