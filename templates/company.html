@@ -47,7 +47,9 @@
         <!-- Domestic Cars -->
         <div class="mb-16">
             <h3 class="text-2xl md:text-3xl font-bold text-center text-primary-600 mb-8">일반 차량</h3>
-            <div class="overflow-x-auto">
+
+            <!-- Desktop Table View -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full bg-white rounded-lg shadow-lg overflow-hidden">
                     <thead class="bg-primary-600 text-white">
                         <tr>
@@ -111,12 +113,83 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Mobile Card View -->
+            <div class="md:hidden space-y-4">
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">기아 세도나</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">1,000,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">1,200,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">1,800,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">150,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">10,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">기아 카니발 프리미엄</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">1,200,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">1,800,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">2,500,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">200,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">15,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">기아 카니발 시그니처</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">1,200,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">2,000,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">2,700,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">200,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">15,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">기아 카니발 프리미엄 F/L</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">1,500,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">2,200,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">3,200,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">300,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">20,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">기아 카니발 시그니처 F/L</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">1,500,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">2,500,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">3,500,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">300,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">20,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">현대 펠리세이드</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">2,000,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">2,800,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">4,000,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">400,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">20,000VND</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Imported Cars -->
         <div class="mb-16">
             <h3 class="text-2xl md:text-3xl font-bold text-center text-primary-600 mb-8">수입차량</h3>
-            <div class="overflow-x-auto">
+
+            <!-- Desktop Table View -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full bg-white rounded-lg shadow-lg overflow-hidden">
                     <thead class="bg-primary-600 text-white">
                         <tr>
@@ -188,12 +261,94 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Mobile Card View -->
+            <div class="md:hidden space-y-4">
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">폭스바겐 비로란</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">2,000,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">3,500,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">5,000,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">400,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">20,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">아우디 Q5</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">1,200,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">2,000,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">3,000,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">300,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">20,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">레인지로버 이보크</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">1,200,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">2,300,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">3,700,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">400,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">20,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">벤츠 GLC200/벤츠 E200</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">1,500,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">2,500,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">3,900,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">400,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">20,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">벤츠 S450L Luxury</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">2,000,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">4,400,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">6,400,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">800,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">40,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">벤츠 마이바흐 S680</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">15,000,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">문의</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">문의</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">8,000,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">500,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">롤스로이스 고스트</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">15,000,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">문의</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">문의</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">8,000,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">500,000VND</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Limousine Cars -->
         <div class="mb-16">
             <h3 class="text-2xl md:text-3xl font-bold text-center text-primary-600 mb-8">리무진 차량</h3>
-            <div class="overflow-x-auto">
+
+            <!-- Desktop Table View -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full bg-white rounded-lg shadow-lg overflow-hidden">
                     <thead class="bg-primary-600 text-white">
                         <tr>
@@ -248,6 +403,64 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Mobile Card View -->
+            <div class="md:hidden space-y-4">
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">포드 리무진 9인승</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">1,200,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">2,000,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">2,800,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">200,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">15,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">현대 솔라티 9인승</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">1,200,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">2,200,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">3,000,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">200,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">15,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">포드 리무진 12인승</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">1,500,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">3,000,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">3,500,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">200,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">15,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">포드 리무진 18인승</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">3,000,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">4,000,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">5,000,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">300,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">25,000VND</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h4 class="font-bold text-gray-900 mb-3 text-center">포드 트랜짓 16인승</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span>공항 픽업 (2시간/15km):</span><span class="font-semibold text-primary-600">1,200,000VND</span></div>
+                        <div class="flex justify-between"><span>4시간/55km:</span><span class="font-semibold text-primary-600">1,600,000VND</span></div>
+                        <div class="flex justify-between"><span>8시간/100km:</span><span class="font-semibold text-primary-600">2,200,000VND</span></div>
+                        <div class="flex justify-between"><span>시간 초과 (시간당):</span><span class="text-gray-600">150,000VND</span></div>
+                        <div class="flex justify-between"><span>KM 초과 (km당):</span><span class="text-gray-600">10,000VND</span></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -321,6 +534,81 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Mobile detection function
+    function isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+               window.innerWidth <= 768;
+    }
+
+    // Handle video autoplay with mobile/desktop differentiation
+    const videos = document.querySelectorAll('.autoplay-video');
+
+    if (isMobile()) {
+        // Mobile: Remove autoplay and show thumbnail only
+        videos.forEach(video => {
+            video.removeAttribute('autoplay');
+            video.removeAttribute('muted');
+
+            // Create play button overlay
+            const playButton = document.createElement('div');
+            playButton.className = 'absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 cursor-pointer';
+            playButton.innerHTML = '<i class="fas fa-play-circle text-4xl text-white"></i>';
+
+            // Insert play button before video
+            video.parentNode.insertBefore(playButton, video);
+
+            // Handle click to play video
+            playButton.addEventListener('click', function() {
+                video.play();
+                this.style.display = 'none';
+            });
+
+            // Show play button when video ends
+            video.addEventListener('ended', function() {
+                playButton.style.display = 'flex';
+            });
+        });
+    } else {
+        // Desktop: Use single Intersection Observer for all videos
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (entry.isIntersecting) {
+                    video.play().catch(e => {
+                        console.log('Autoplay failed:', e);
+                    });
+                } else {
+                    video.pause();
+                }
+            });
+        }, {
+            threshold: 0.5
+        });
+
+        // Observe all videos with single observer
+        videos.forEach(video => {
+            observer.observe(video);
+        });
+
+        // Fallback for desktop
+        const playOnInteraction = () => {
+            videos.forEach(video => {
+                video.play().catch(e => console.log('Play failed:', e));
+            });
+            document.removeEventListener('touchstart', playOnInteraction);
+            document.removeEventListener('click', playOnInteraction);
+        };
+
+        document.addEventListener('touchstart', playOnInteraction, { once: true });
+        document.addEventListener('click', playOnInteraction, { once: true });
+    }
+
+    // Common event listener for all videos
+    videos.forEach(video => {
+        video.addEventListener('ended', function() {
+            // Video will automatically stop after playing once (no loop)
+        });
+    });
 });
 </script>
 {% endblock %}

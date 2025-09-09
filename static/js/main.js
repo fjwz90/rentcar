@@ -1,19 +1,31 @@
-// Main JavaScript for 상상렌트카
+// Main JavaScript for 상상렌트카 - Optimized version
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize animations
-    initAnimations();
-    
-    // Initialize smooth scrolling
-    initSmoothScrolling();
-    
-    // Initialize phone call handlers
-    initPhoneHandlers();
-    
-    // Initialize image galleries
-    initImageGalleries();
-    
-    // Initialize form enhancements
-    initFormEnhancements();
+    // Register Service Worker for caching
+    registerServiceWorker();
+
+    // Detect WebP support for better image optimization
+    detectWebPSupport();
+
+    // Performance optimization: Use requestAnimationFrame for smooth animations
+    requestAnimationFrame(() => {
+        // Initialize lazy loading for images
+        initLazyLoading();
+
+        // Initialize animations
+        initAnimations();
+
+        // Initialize smooth scrolling
+        initSmoothScrolling();
+
+        // Initialize phone call handlers
+        initPhoneHandlers();
+
+        // Initialize image galleries
+        initImageGalleries();
+
+        // Initialize form enhancements
+        initFormEnhancements();
+    });
 });
 
 // Animation initialization
@@ -68,27 +80,63 @@ function initPhoneHandlers() {
     });
 }
 
-// Image gallery functionality
+// Image gallery functionality - Optimized for performance
 function initImageGalleries() {
-    // Car detail carousel auto-play pause on hover
-    const carCarousel = document.querySelector('#carCarousel');
-    if (carCarousel) {
-        const carousel = new bootstrap.Carousel(carCarousel, {
-            interval: 5000,
-            wrap: true
-        });
-        
-        carCarousel.addEventListener('mouseenter', () => {
-            carousel.pause();
-        });
-        
-        carCarousel.addEventListener('mouseleave', () => {
-            carousel.cycle();
-        });
-    }
-    
+    // Modern carousel implementation without Bootstrap dependency
+    const carousels = document.querySelectorAll('.carousel');
+    carousels.forEach(carousel => {
+        initModernCarousel(carousel);
+    });
+
     // Wedding gallery lightbox functionality
     initWeddingGallery();
+}
+
+// Modern carousel implementation
+function initModernCarousel(carousel) {
+    const items = carousel.querySelectorAll('.carousel-item');
+    const indicators = carousel.querySelectorAll('.carousel-indicator');
+    let currentIndex = 0;
+    let intervalId = null;
+
+    function showSlide(index) {
+        items.forEach((item, i) => {
+            item.classList.toggle('active', i === index);
+        });
+        indicators.forEach((indicator, i) => {
+            indicator.classList.toggle('active', i === index);
+        });
+        currentIndex = index;
+    }
+
+    function nextSlide() {
+        const nextIndex = (currentIndex + 1) % items.length;
+        showSlide(nextIndex);
+    }
+
+    function startAutoPlay() {
+        if (intervalId) clearInterval(intervalId);
+        intervalId = setInterval(nextSlide, 5000);
+    }
+
+    function stopAutoPlay() {
+        if (intervalId) {
+            clearInterval(intervalId);
+            intervalId = null;
+        }
+    }
+
+    // Initialize
+    showSlide(0);
+    startAutoPlay();
+
+    // Event listeners
+    carousel.addEventListener('mouseenter', stopAutoPlay);
+    carousel.addEventListener('mouseleave', startAutoPlay);
+
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => showSlide(index));
+    });
 }
 
 // Wedding gallery initialization
@@ -116,36 +164,85 @@ function initWeddingGallery() {
     });
 }
 
-// Form enhancements
+// Form enhancements - Optimized version
 function initFormEnhancements() {
-    // Add loading states to forms
+    // Add loading states to forms with better UX
     document.querySelectorAll('form').forEach(form => {
-        form.addEventListener('submit', function() {
-            const submitBtn = this.querySelector('button[type="submit"]');
-            if (submitBtn) {
+        form.addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('button[type="submit"], input[type="submit"]');
+            if (submitBtn && !submitBtn.disabled) {
+                // Prevent double submission
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>처리중...';
-                
-                // Add loading class to form
-                this.classList.add('loading');
+                const originalText = submitBtn.innerHTML;
+
+                // Add loading spinner
+                submitBtn.innerHTML = `
+                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    처리중...
+                `;
+
+                // Re-enable button after 10 seconds as fallback
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }, 10000);
             }
         });
     });
-    
-    // File upload preview for admin car form
+
+    // File upload preview for admin car form - Optimized
     const imageInput = document.querySelector('input[name="images"]');
     if (imageInput) {
         imageInput.addEventListener('change', function() {
             previewImages(this);
         });
     }
-    
-    // Auto-format phone numbers
+
+    // Auto-format phone numbers with better validation
     document.querySelectorAll('input[type="tel"]').forEach(input => {
         input.addEventListener('input', function() {
             formatPhoneNumber(this);
         });
+
+        // Add input validation
+        input.addEventListener('blur', function() {
+            if (this.value && !isValidPhoneNumber(this.value)) {
+                this.classList.add('border-red-500');
+                showValidationError(this, '올바른 전화번호 형식을 입력해주세요');
+            } else {
+                this.classList.remove('border-red-500');
+                hideValidationError(this);
+            }
+        });
     });
+}
+
+// Phone number validation
+function isValidPhoneNumber(phone) {
+    // Vietnamese phone number validation
+    const cleanPhone = phone.replace(/\D/g, '');
+    return cleanPhone.length >= 9 && cleanPhone.length <= 12;
+}
+
+// Validation error display
+function showValidationError(input, message) {
+    let errorElement = input.parentNode.querySelector('.validation-error');
+    if (!errorElement) {
+        errorElement = document.createElement('p');
+        errorElement.className = 'validation-error text-red-500 text-sm mt-1';
+        input.parentNode.appendChild(errorElement);
+    }
+    errorElement.textContent = message;
+}
+
+function hideValidationError(input) {
+    const errorElement = input.parentNode.querySelector('.validation-error');
+    if (errorElement) {
+        errorElement.remove();
+    }
 }
 
 // Image preview functionality
@@ -198,6 +295,158 @@ function formatPhoneNumber(input) {
     }
     
     input.value = value;
+}
+
+// Service Worker registration for caching and offline support
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        // Only register in production or when explicitly enabled
+        const isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+        const isSecure = location.protocol === 'https:' || isLocalhost;
+
+        if (isSecure) {
+            navigator.serviceWorker.register('/static/js/sw.js', { scope: '/' })
+                .then(registration => {
+                    console.log('Service Worker registered successfully:', registration.scope);
+
+                    // Handle updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        if (newWorker) {
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // New content is available, show update notification
+                                    showUpdateNotification();
+                                }
+                            });
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    }
+}
+
+function showUpdateNotification() {
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-4 right-4 bg-blue-600 text-white px-4 py-3 rounded-lg shadow-lg z-50 max-w-sm';
+    notification.innerHTML = `
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="font-medium">새로운 버전이 있습니다!</p>
+                <p class="text-sm opacity-90">새로고침하여 업데이트하세요.</p>
+            </div>
+            <button onclick="location.reload()" class="ml-4 bg-blue-700 hover:bg-blue-800 px-3 py-1 rounded text-sm font-medium transition-colors">
+                새로고침
+            </button>
+        </div>
+        <button onclick="this.parentElement.parentElement.remove()" class="absolute top-2 right-2 text-blue-200 hover:text-white">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+
+    document.body.appendChild(notification);
+
+    // Auto-remove after 10 seconds
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 10000);
+}
+
+// WebP support detection for better image optimization
+function detectWebPSupport() {
+    // Check WebP support using canvas
+    function checkWebP() {
+        return new Promise(resolve => {
+            const webP = new Image();
+            webP.onload = webP.onerror = function() {
+                resolve(webP.height === 2);
+            };
+            webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+        });
+    }
+
+    // Add appropriate class to body based on WebP support
+    checkWebP().then(hasWebP => {
+        document.documentElement.classList.add(hasWebP ? 'webp' : 'no-webp');
+
+        // Store in localStorage for future visits
+        localStorage.setItem('webp-support', hasWebP ? 'true' : 'false');
+    });
+
+    // Use cached result if available
+    const cached = localStorage.getItem('webp-support');
+    if (cached !== null) {
+        document.documentElement.classList.add(cached === 'true' ? 'webp' : 'no-webp');
+    }
+}
+
+// Lazy loading for images - Performance optimization
+function initLazyLoading() {
+    // Check if browser supports Intersection Observer
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    loadImage(img);
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            // Load images 50px before they enter the viewport
+            rootMargin: '50px 0px',
+            threshold: 0.01
+        });
+
+        // Observe all images with data-src attribute
+        const lazyImages = document.querySelectorAll('img[data-src]');
+        lazyImages.forEach(img => {
+            imageObserver.observe(img);
+        });
+
+        // Also observe regular images for progressive enhancement
+        const regularImages = document.querySelectorAll('img:not([data-src])');
+        regularImages.forEach(img => {
+            // Add loading="lazy" if not already present
+            if (!img.hasAttribute('loading')) {
+                img.setAttribute('loading', 'lazy');
+            }
+        });
+    } else {
+        // Fallback for browsers without Intersection Observer
+        loadAllImages();
+    }
+}
+
+function loadImage(img) {
+    const src = img.getAttribute('data-src');
+    if (src) {
+        img.src = src;
+        img.removeAttribute('data-src');
+
+        // Add loading class for smooth transition
+        img.classList.add('image-loading');
+
+        img.addEventListener('load', function() {
+            img.classList.remove('image-loading');
+            img.classList.add('image-loaded');
+        });
+
+        img.addEventListener('error', function() {
+            // Fallback to placeholder on error
+            img.src = '/static/images/placeholder.jpg';
+        });
+    }
+}
+
+function loadAllImages() {
+    const lazyImages = document.querySelectorAll('img[data-src]');
+    lazyImages.forEach(img => loadImage(img));
 }
 
 // Utility functions

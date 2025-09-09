@@ -10,42 +10,72 @@
             <!-- Car Media (Video + Images) -->
             <div class="lg:col-span-2">
                 {% set images = car.get_images_list() %}
-                {% if car.video %}
-                    <!-- Video Section -->
-                    <div class="relative overflow-hidden rounded-2xl shadow-2xl mb-6">
-                        <div class="w-full aspect-[16/10] bg-gray-100">
-                            <video id="mainVideo" autoplay muted controls class="w-full h-full object-contain autoplay-video">
-                                <source src="{{ url_for('static', filename='uploads/' + car.video) }}" type="video/mp4">
-                                브라우저가 동영상을 지원하지 않습니다.
-                            </video>
-                        </div>
-                    </div>
-                {% endif %}
-
-                {% if images %}
-                    <div class="relative overflow-hidden rounded-2xl shadow-2xl">
-                        <div class="w-full aspect-[16/10] bg-gray-100">
-                            <img id="mainImage" src="{{ url_for('static', filename='uploads/' + images[0]) }}"
-                                 class="w-full h-full object-contain" alt="{{ car.name }}">
-                        </div>
-
-                        {% if images|length > 1 %}
-                            <!-- Thumbnail Images -->
-                            <div class="flex space-x-2 mt-4 overflow-x-auto pb-2">
-                                {% for image in images %}
-                                    <button data-image="{{ url_for('static', filename='uploads/' + image) }}"
-                                            class="thumbnail-btn flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-600">
-                                        <img src="{{ url_for('static', filename='uploads/' + image) }}"
-                                             class="w-full h-full object-contain bg-gray-100" alt="썸네일 {{ loop.index }}">
-                                    </button>
-                                {% endfor %}
+                {% if is_mobile %}
+                    <!-- Mobile: Show only images -->
+                    {% if images %}
+                        <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+                            <div class="w-full aspect-[16/10] bg-gray-100">
+                                <img id="mainImage" src="{{ url_for('static', filename='uploads/' + images[0]) }}"
+                                     class="w-full h-full object-contain" alt="{{ car.name }}">
                             </div>
-                        {% endif %}
-                    </div>
-                {% elif not car.video %}
-                    <div class="w-full h-96 lg:h-[500px] bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center shadow-xl">
-                        <i class="fas fa-car text-8xl text-gray-400"></i>
-                    </div>
+
+                            {% if images|length > 1 %}
+                                <!-- Thumbnail Images -->
+                                <div class="flex space-x-2 mt-4 overflow-x-auto pb-2">
+                                    {% for image in images %}
+                                        <button data-image="{{ url_for('static', filename='uploads/' + image) }}"
+                                                class="thumbnail-btn flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-600">
+                                            <img src="{{ url_for('static', filename='uploads/' + image) }}"
+                                                 class="w-full h-full object-contain bg-gray-100" alt="썸네일 {{ loop.index }}">
+                                        </button>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="w-full h-96 lg:h-[500px] bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center shadow-xl">
+                            <i class="fas fa-car text-8xl text-gray-400"></i>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <!-- Desktop: Show video if available, otherwise images -->
+                    {% if car.video %}
+                        <!-- Video Section -->
+                        <div class="relative overflow-hidden rounded-2xl shadow-2xl mb-6">
+                            <div class="w-full aspect-[16/10] bg-gray-100">
+                                <video id="mainVideo" autoplay muted controls class="w-full h-full object-contain autoplay-video">
+                                    <source src="{{ url_for('static', filename='uploads/' + car.video) }}" type="video/mp4">
+                                    브라우저가 동영상을 지원하지 않습니다.
+                                </video>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if images %}
+                        <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+                            <div class="w-full aspect-[16/10] bg-gray-100">
+                                <img id="mainImage" src="{{ url_for('static', filename='uploads/' + images[0]) }}"
+                                     class="w-full h-full object-contain" alt="{{ car.name }}">
+                            </div>
+
+                            {% if images|length > 1 %}
+                                <!-- Thumbnail Images -->
+                                <div class="flex space-x-2 mt-4 overflow-x-auto pb-2">
+                                    {% for image in images %}
+                                        <button data-image="{{ url_for('static', filename='uploads/' + image) }}"
+                                                class="thumbnail-btn flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-600">
+                                            <img src="{{ url_for('static', filename='uploads/' + image) }}"
+                                                 class="w-full h-full object-contain bg-gray-100" alt="썸네일 {{ loop.index }}">
+                                        </button>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% elif not car.video %}
+                        <div class="w-full h-96 lg:h-[500px] bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center shadow-xl">
+                            <i class="fas fa-car text-8xl text-gray-400"></i>
+                        </div>
+                    {% endif %}
                 {% endif %}
             </div>
 
@@ -121,9 +151,76 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Handle video autoplay - play once and stop
+    // Mobile detection function
+    function isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+               window.innerWidth <= 768;
+    }
+
+    // Handle video autoplay with mobile/desktop differentiation
     const videos = document.querySelectorAll('.autoplay-video');
 
+    if (isMobile()) {
+        // Mobile: Remove autoplay and show thumbnail only
+        videos.forEach(video => {
+            video.removeAttribute('autoplay');
+            video.removeAttribute('muted');
+
+            // Create play button overlay
+            const playButton = document.createElement('div');
+            playButton.className = 'absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 cursor-pointer';
+            playButton.innerHTML = '<i class="fas fa-play-circle text-4xl text-white"></i>';
+
+            // Insert play button before video
+            video.parentNode.insertBefore(playButton, video);
+
+            // Handle click to play video
+            playButton.addEventListener('click', function() {
+                video.play();
+                this.style.display = 'none';
+            });
+
+            // Show play button when video ends
+            video.addEventListener('ended', function() {
+                playButton.style.display = 'flex';
+            });
+        });
+    } else {
+        // Desktop: Use single Intersection Observer for all videos
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (entry.isIntersecting) {
+                    video.play().catch(e => {
+                        console.log('Autoplay failed:', e);
+                    });
+                } else {
+                    video.pause();
+                }
+            });
+        }, {
+            threshold: 0.5
+        });
+
+        // Observe all videos with single observer
+        videos.forEach(video => {
+            observer.observe(video);
+        });
+
+        // Fallback for desktop
+        const playOnInteraction = () => {
+            videos.forEach(video => {
+                video.play().catch(e => console.log('Play failed:', e));
+            });
+            document.removeEventListener('touchstart', playOnInteraction);
+            document.removeEventListener('click', playOnInteraction);
+        };
+
+        document.addEventListener('touchstart', playOnInteraction, { once: true });
+        document.addEventListener('click', playOnInteraction, { once: true });
+    }
+
+    // Common event listener for all videos
     videos.forEach(video => {
         video.addEventListener('ended', function() {
             // Video will automatically stop after playing once (no loop)

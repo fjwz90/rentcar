@@ -72,3 +72,37 @@
 ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(45deg, #6366f1, #3b82f6);
 }
+
+/* Image lazy loading styles */
+.image-loading {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    filter: blur(2px);
+}
+
+.image-loaded {
+    opacity: 1;
+    filter: blur(0);
+}
+
+/* Smooth loading animation for images */
+img {
+    transition: opacity 0.3s ease-in-out;
+}
+
+img[loading="lazy"] {
+    opacity: 0;
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
+/* WebP support detection */
+.webp .webp-image {
+    background-image: url('data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==');
+}
+
+.no-webp .webp-image {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==');
+}

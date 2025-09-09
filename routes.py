@@ -3,6 +3,7 @@ import json
 from datetime import datetime, date
 from flask import render_template, request, redirect, url_for, flash, session, jsonify, abort
 from werkzeug.utils import secure_filename
+from user_agents import parse
 from app import app, db
 from models import Car, Reservation, Admin
 
@@ -21,6 +22,12 @@ def allowed_file(filename):
 def allowed_video_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'mp4', 'avi', 'mov', 'wmv', 'flv', 'webm'}
 
+def is_mobile_device():
+    """Check if the request is from a mobile device"""
+    user_agent_string = request.headers.get('User-Agent', '')
+    user_agent = parse(user_agent_string)
+    return user_agent.is_mobile or user_agent.is_tablet
+
 # Public routes
 @app.route('/')
 def index():
@@ -28,7 +35,8 @@ def index():
     cars_with_video = Car.query.filter(Car.video.isnot(None)).order_by(Car.created_at.desc()).all()
     cars_without_video = Car.query.filter(Car.video.is_(None)).order_by(Car.created_at.desc()).all()
     cars = cars_with_video + cars_without_video
-    return render_template('index.html', cars=cars)
+    is_mobile = is_mobile_device()
+    return render_template('index.html', cars=cars, is_mobile=is_mobile)
 
 @app.route('/cars')
 def cars():
@@ -36,12 +44,14 @@ def cars():
     cars_with_video = Car.query.filter(Car.video.isnot(None)).order_by(Car.created_at.desc()).all()
     cars_without_video = Car.query.filter(Car.video.is_(None)).order_by(Car.created_at.desc()).all()
     cars_list = cars_with_video + cars_without_video
-    return render_template('cars.html', cars=cars_list)
+    is_mobile = is_mobile_device()
+    return render_template('cars.html', cars=cars_list, is_mobile=is_mobile)
 
 @app.route('/car/<int:car_id>')
 def car_detail(car_id):
     car = Car.query.get_or_404(car_id)
-    return render_template('car_detail.html', car=car)
+    is_mobile = is_mobile_device()
+    return render_template('car_detail.html', car=car, is_mobile=is_mobile)
 
 @app.route('/company')
 def company():

@@ -2,7 +2,34 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="호치민 최고의 프리미엄 렌터카 서비스 - 벤츠, BMW, 아우디 등 고급차량 대여">
+    <meta name="keywords" content="렌터카, 호치민, 베트남, 렌트카, 상상렌트카, 벤츠, BMW, 아우디">
+    <meta name="author" content="상상렌트카">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Korean">
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:title" content="상상렌트카">
+    <meta property="og:description" content="호치민 최고의 프리미엄 렌터카 서비스 - 벤츠, BMW, 아우디 등 고급차량 대여">
+    <meta property="og:image" content="{{ url_for('static', filename='상상렌트카로고.png', _external=True) }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.url }}">
+    <meta property="twitter:title" content="상상렌트카">
+    <meta property="twitter:description" content="호치민 최고의 프리미엄 렌터카 서비스 - 벤츠, BMW, 아우디 등 고급차량 대여">
+    <meta property="twitter:image" content="{{ url_for('static', filename='상상렌트카로고.png', _external=True) }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+
     <title>{% block title %}상상렌트카{% endblock %}</title>
     
     <!-- Tailwind CSS -->
@@ -68,9 +95,18 @@
             }
         }
     </script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
+    <!-- DNS prefetch and preconnect for performance -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <!-- Font Awesome with integrity check -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Google Fonts with font-display swap -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     {% block extra_head %}{% endblock %}
@@ -98,22 +134,39 @@
                 </div>
 
                 <div class="md:hidden">
-                    <button type="button" class="bg-primary-600 inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                    <button type="button" id="mobile-menu-button" class="bg-primary-600 inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-colors duration-200" aria-controls="mobile-menu" aria-expanded="false" aria-label="메뉴 열기">
                         <span class="sr-only">메뉴 열기</span>
-                        <i class="fas fa-bars"></i>
+                        <i class="fas fa-bars text-lg"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class="md:hidden hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/95 backdrop-blur-md">
-                <a href="{{ url_for('index') }}" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">홈</a>
-                <a href="{{ url_for('company') }}" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">회사소개</a>
-                <a href="{{ url_for('cars') }}" class="text-gray-700 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">차량보기</a>
-                <a href="tel:+84708000002" class="bg-primary-600 text-white hover:bg-primary-700 block px-3 py-2 rounded-md text-base font-medium">
-                    <i class="fas fa-phone mr-2"></i>전화
-                </a>
+        <!-- Mobile menu overlay -->
+        <div class="md:hidden fixed inset-0 z-40 hidden" id="mobile-menu-overlay" style="background-color: rgba(0, 0, 0, 0.5);"></div>
+
+        <!-- Mobile menu -->
+        <div class="md:hidden fixed top-16 left-0 right-0 z-50 hidden transform transition-transform duration-300 ease-in-out" id="mobile-menu">
+            <div class="bg-white/95 backdrop-blur-md shadow-lg border-t border-gray-200">
+                <div class="px-4 pt-4 pb-6 space-y-2">
+                    <a href="{{ url_for('index') }}" class="text-gray-700 hover:text-primary-600 hover:bg-primary-50 block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200">
+                        <i class="fas fa-home mr-3"></i>홈
+                    </a>
+                    <a href="{{ url_for('company') }}" class="text-gray-700 hover:text-primary-600 hover:bg-primary-50 block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200">
+                        <i class="fas fa-building mr-3"></i>회사소개
+                    </a>
+                    <a href="{{ url_for('cars') }}" class="text-gray-700 hover:text-primary-600 hover:bg-primary-50 block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200">
+                        <i class="fas fa-car mr-3"></i>차량보기
+                    </a>
+                    <div class="pt-2 border-t border-gray-200">
+                        <a href="tel:+84708000002" class="bg-primary-600 text-white hover:bg-primary-700 block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 shadow-lg">
+                            <i class="fas fa-phone mr-3"></i>전화: +84708000002
+                        </a>
+                        <a href="https://open.kakao.com/o/s32CvgRh" target="_blank" class="bg-yellow-500 text-white hover:bg-yellow-600 block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 shadow-lg mt-2">
+                            <i class="fas fa-comment mr-3"></i>카카오톡 문의
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -141,28 +194,78 @@
     <!-- Footer -->
     <footer class="bg-gradient-to-r from-secondary-800 to-secondary-900 text-white mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">회사 정보</h3>
-                    <p class="text-secondary-300 flex items-start gap-2">
-                        <i class="fas fa-map-marker-alt mt-1"></i>
-                        <span>Đường 16, Tân Phú, Quận 7, Hồ Chí Minh 700000, Việt Nam</span>
-                    </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Company Info -->
+                <div class="md:col-span-1">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-building mr-2 text-primary-400"></i>
+                        회사 정보
+                    </h3>
+                    <div class="space-y-3">
+                        <p class="text-secondary-300 flex items-start gap-2 text-sm leading-relaxed">
+                            <i class="fas fa-map-marker-alt mt-1 text-primary-400 flex-shrink-0"></i>
+                            <span>Đường 16, Tân Phú, Quận 7<br>Hồ Chí Minh 700000, Việt Nam</span>
+                        </p>
+                        <p class="text-secondary-300 flex items-center gap-2 text-sm">
+                            <i class="fas fa-clock text-primary-400"></i>
+                            <span>24시간 영업</span>
+                        </p>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">연락처</h3>
-                    <p class="text-secondary-300 mb-2">
-                        <i class="fas fa-phone mr-2"></i>
-                        <a href="tel:+84708000002" class="hover:text-white transition-colors">+84708000002</a>
-                    </p>
-                    <p class="text-secondary-300">
-                        <i class="fas fa-envelope mr-2"></i>
-                        <a href="mailto:fjwz90@icloud.com" class="hover:text-white transition-colors">fjwz90@icloud.com</a>
-                    </p>
+
+                <!-- Contact Info -->
+                <div class="md:col-span-1">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-address-book mr-2 text-primary-400"></i>
+                        연락처
+                    </h3>
+                    <div class="space-y-3">
+                        <a href="tel:+84708000002" class="text-secondary-300 hover:text-white transition-colors flex items-center gap-2 text-sm group">
+                            <i class="fas fa-phone text-primary-400 group-hover:text-white transition-colors"></i>
+                            <span>+84708000002</span>
+                        </a>
+                        <a href="mailto:fjwz90@icloud.com" class="text-secondary-300 hover:text-white transition-colors flex items-center gap-2 text-sm group">
+                            <i class="fas fa-envelope text-primary-400 group-hover:text-white transition-colors"></i>
+                            <span>fjwz90@icloud.com</span>
+                        </a>
+                        <a href="https://open.kakao.com/o/s32CvgRh" target="_blank" class="text-secondary-300 hover:text-white transition-colors flex items-center gap-2 text-sm group">
+                            <i class="fas fa-comment text-primary-400 group-hover:text-white transition-colors"></i>
+                            <span>카카오톡 문의</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="md:col-span-1">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-link mr-2 text-primary-400"></i>
+                        빠른 링크
+                    </h3>
+                    <div class="grid grid-cols-1 gap-2">
+                        <a href="{{ url_for('index') }}" class="text-secondary-300 hover:text-white transition-colors text-sm">홈</a>
+                        <a href="{{ url_for('cars') }}" class="text-secondary-300 hover:text-white transition-colors text-sm">차량보기</a>
+                        <a href="{{ url_for('company') }}" class="text-secondary-300 hover:text-white transition-colors text-sm">회사소개</a>
+                        <a href="tel:+84708000002" class="text-secondary-300 hover:text-white transition-colors text-sm">예약 문의</a>
+                    </div>
                 </div>
             </div>
-            <div class="border-t border-secondary-700 mt-8 pt-8 text-center">
-                <p class="text-secondary-400">&copy; 2025 상상렌트카. All rights reserved.</p>
+
+            <!-- Social Links & Copyright -->
+            <div class="border-t border-secondary-700 mt-8 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-secondary-400 text-sm">&copy; 2025 상상렌트카. All rights reserved.</p>
+                    <div class="flex items-center gap-4">
+                        <a href="tel:+84708000002" class="text-secondary-400 hover:text-white transition-colors">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                        </a>
+                        <a href="https://open.kakao.com/o/s32CvgRh" target="_blank" class="text-secondary-400 hover:text-white transition-colors">
+                            <i class="fas fa-comment text-lg"></i>
+                        </a>
+                        <a href="mailto:fjwz90@icloud.com" class="text-secondary-400 hover:text-white transition-colors">
+                            <i class="fas fa-envelope text-lg"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
@@ -170,24 +273,72 @@
     <!-- Custom JS -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>
-        // Mobile menu toggle
+        // Mobile menu toggle with improved UX
         document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            let isMenuOpen = false;
+
+            function toggleMobileMenu() {
+                isMenuOpen = !isMenuOpen;
+
+                if (isMenuOpen) {
+                    // Open menu
+                    mobileMenu.classList.remove('hidden');
+                    mobileMenuOverlay.classList.remove('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'true');
+                    mobileMenuButton.innerHTML = '<span class="sr-only">메뉴 닫기</span><i class="fas fa-times text-lg"></i>';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    // Close menu
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuOverlay.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    mobileMenuButton.innerHTML = '<span class="sr-only">메뉴 열기</span><i class="fas fa-bars text-lg"></i>';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+
+            function closeMobileMenu() {
+                if (isMenuOpen) {
+                    toggleMobileMenu();
+                }
+            }
 
             if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', function() {
-                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
-                    mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
-                    mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+                // Close menu when clicking overlay
+                if (mobileMenuOverlay) {
+                    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+                }
+
+                // Close menu when clicking menu items
+                mobileMenu.addEventListener('click', function(e) {
+                    if (e.target.tagName === 'A') {
+                        closeMobileMenu();
+                    }
                 });
             }
 
-            // Close alerts
+            // Close alerts with animation
             document.querySelectorAll('.close-alert').forEach(button => {
                 button.addEventListener('click', function() {
-                    this.parentElement.remove();
+                    const alert = this.parentElement;
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateX(-100%)';
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 300);
                 });
+            });
+
+            // Close mobile menu on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isMenuOpen) {
+                    closeMobileMenu();
+                }
             });
         });
     </script>
