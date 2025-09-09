@@ -30,10 +30,12 @@
                             <div class="md:w-1/3">
                                 {% set images = car.get_images_list() %}
                                 {% if images %}
-                                    <img src="{{ url_for('static', filename='uploads/' + images[0]) }}"
-                                         class="w-full h-64 md:h-full object-cover" alt="{{ car.name }}">
+                                    <div class="w-full aspect-[4/3] bg-gray-100 rounded-lg overflow-hidden">
+                                        <img src="{{ url_for('static', filename='uploads/' + images[0]) }}"
+                                             class="w-full h-full object-contain" alt="{{ car.name }}">
+                                    </div>
                                 {% else %}
-                                    <div class="w-full h-64 md:h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                    <div class="w-full aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
                                         <i class="fas fa-car text-6xl text-gray-400"></i>
                                     </div>
                                 {% endif %}

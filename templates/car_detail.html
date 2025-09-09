@@ -12,9 +12,9 @@
                 {% set images = car.get_images_list() %}
                 {% if images %}
                     <div class="relative overflow-hidden rounded-2xl shadow-2xl">
-                        <div class="aspect-w-16 aspect-h-9">
+                        <div class="w-full aspect-[16/10] bg-gray-100">
                             <img id="mainImage" src="{{ url_for('static', filename='uploads/' + images[0]) }}"
-                                 class="w-full h-96 lg:h-[500px] object-cover" alt="{{ car.name }}">
+                                 class="w-full h-full object-contain" alt="{{ car.name }}">
                         </div>
 
                         {% if images|length > 1 %}
@@ -24,7 +24,7 @@
                                     <button data-image="{{ url_for('static', filename='uploads/' + image) }}"
                                             class="thumbnail-btn flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-600">
                                         <img src="{{ url_for('static', filename='uploads/' + image) }}"
-                                             class="w-full h-full object-cover" alt="썸네일 {{ loop.index }}">
+                                             class="w-full h-full object-contain bg-gray-100" alt="썸네일 {{ loop.index }}">
                                     </button>
                                 {% endfor %}
                             </div>
