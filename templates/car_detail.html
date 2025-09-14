@@ -89,15 +89,33 @@
                         <div class="space-y-4">
                             <div class="flex justify-between items-center p-4 bg-primary-50 rounded-xl border-l-4 border-primary-600">
                                 <span class="font-medium text-gray-700">공항픽업/2시간</span>
-                                <span class="text-xl font-bold text-primary-700">{{ "{:,}".format(car.price_2h) }} VND</span>
+                                <span class="text-xl font-bold text-primary-700">
+                                    {% if car.price_2h == 0 %}
+                                        문의 요망
+                                    {% else %}
+                                        {{ "{:,}".format(car.price_2h) }} VND
+                                    {% endif %}
+                                </span>
                             </div>
                             <div class="flex justify-between items-center p-4 bg-primary-50 rounded-xl border-l-4 border-primary-600">
                                 <span class="font-medium text-gray-700">4시간</span>
-                                <span class="text-xl font-bold text-primary-700">{{ "{:,}".format(car.price_4h) }} VND</span>
+                                <span class="text-xl font-bold text-primary-700">
+                                    {% if car.price_4h == 0 %}
+                                        문의 요망
+                                    {% else %}
+                                        {{ "{:,}".format(car.price_4h) }} VND
+                                    {% endif %}
+                                </span>
                             </div>
                             <div class="flex justify-between items-center p-4 bg-primary-50 rounded-xl border-l-4 border-primary-600">
                                 <span class="font-medium text-gray-700">8시간</span>
-                                <span class="text-xl font-bold text-primary-700">{{ "{:,}".format(car.price_8h) }} VND</span>
+                                <span class="text-xl font-bold text-primary-700">
+                                    {% if car.price_8h == 0 %}
+                                        문의 요망
+                                    {% else %}
+                                        {{ "{:,}".format(car.price_8h) }} VND
+                                    {% endif %}
+                                </span>
                             </div>
                         </div>
                     </div>
